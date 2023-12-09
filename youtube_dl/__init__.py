@@ -10,7 +10,7 @@ import os
 import random
 import sys
 
-from .torgate import Tor
+from .torgate import Tor, Torrc
 
 
 from .options import (
@@ -475,6 +475,16 @@ def _real_main(argv=None):
             retcode = 101
 
     sys.exit(retcode)
+
+
+def get_tor_instance(torrc_file=None) -> Tor:
+    if torrc_file:
+        return Tor(torrc_file)
+    else:
+        torrc = Torrc.search_torrc_file()
+        if torrc is None:
+            raise FileNotFoundError('Impossible to locate a torrc file. Please specify one through --torrc option.')
+        return Tor(torrc)
 
 
 def main(argv=None):
