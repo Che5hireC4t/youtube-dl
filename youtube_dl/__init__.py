@@ -321,6 +321,10 @@ def _real_main(argv=None):
         None if opts.match_filter is None
         else match_filter_func(opts.match_filter))
 
+    tor = None
+    if opts.tor:
+        tor = get_tor_instance(opts.torrc)
+
     ydl_opts = {
         'usenetrc': opts.usenetrc,
         'username': opts.username,
