@@ -238,6 +238,14 @@ def parseOpts(overrideArguments=None):
         metavar='TORRC', dest='torrc',
         help='If youtube-dl fails to find the torrc configuring the tor process, you can specify it there.'
     )
+    anonymity.add_option(
+        '--dont-mimic-tb', dest='dont-mimic-tb',
+        action='store_true',
+        help='When using the --tor option, youtube-dl will try to mimic the tor browser behavior by using'
+             'specific headers, and in particular spoofing the user agent for the tor browser one.'
+             'Set this option to disable this behavior. The --user-agent or any options setting custom headers override'
+             'this behavior (i.e. this option is processed first, and then the other options).'
+    )
 
     geo = optparse.OptionGroup(parser, 'Geo Restriction')
     geo.add_option(
