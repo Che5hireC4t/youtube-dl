@@ -322,8 +322,10 @@ def _real_main(argv=None):
         else match_filter_func(opts.match_filter))
 
     tor = None
+    available_tor_proxies = list()
     if opts.tor:
         tor = get_tor_instance(opts.torrc)
+        available_tor_proxies = [p['http'] for p in tor.get_socks_proxy_dict()]
 
     ydl_opts = {
         'usenetrc': opts.usenetrc,
