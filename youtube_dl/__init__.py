@@ -414,7 +414,7 @@ def _real_main(argv=None):
         'cookiefile': opts.cookiefile,
         'nocheckcertificate': opts.no_check_certificate,
         'prefer_insecure': opts.prefer_insecure,
-        'proxy': opts.proxy,
+        'proxy': available_tor_proxies[0] if available_tor_proxies else opts.proxy,
         'socket_timeout': opts.socket_timeout,
         'bidi_workaround': opts.bidi_workaround,
         'debug_printtraffic': opts.debug_printtraffic,
