@@ -239,7 +239,7 @@ def parseOpts(overrideArguments=None):
         help='If youtube-dl fails to find the torrc configuring the tor process, you can specify it there.'
     )
     anonymity.add_option(
-        '--dont-mimic-tb', dest='dont-mimic-tb',
+        '--dont-mimic-tb', dest='dont_mimic_tb',
         action='store_true',
         help='When using the --tor option, youtube-dl will try to mimic the tor browser behavior by using'
              'specific headers, and in particular spoofing the user agent for the tor browser one.'
@@ -247,13 +247,13 @@ def parseOpts(overrideArguments=None):
              'this behavior (i.e. this option is processed first, and then the other options).'
     )
     anonymity.add_option(
-        '--dont-isolate-downloads', dest='dont-isolate',
+        '--dont-isolate-downloads', dest='dont_isolate',
         action='store_true',
         help='When using the --tor option, youtube-dl will try to change the tor circuit between each download.'
              'Set this option to disable this behavior.'
     )
     anonymity.add_option(
-        '--retry-new-id', dest='retry-new-id',
+        '--retry-new-id', dest='retry_new_id',
         metavar='NUMBER', default=-1, type=int,
         help='Some websites block Tor exit nodes. For instance, Youtube frequently sends a 403 unauthorized'
              'or a 429 too many requests when trying to download videos through the Tor network.'
