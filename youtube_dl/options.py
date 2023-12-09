@@ -226,6 +226,18 @@ def parseOpts(overrideArguments=None):
     )
 
     anonymity = optparse.OptionGroup(parser, 'Anonymity')
+    anonymity.add_option(
+        '--tor', dest='tor',
+        action='store_true',
+        help='Download video(s) through the Tor network. This option overrides the --proxy option.'
+             'If this option is enabled, youtube-dl will try to automatically detect tor settings through torrc file.'
+             'If it fails, you can specify the torrc file manually through the --torrc option.'
+    )
+    anonymity.add_option(
+        '--torrc',
+        metavar='TORRC', dest='torrc',
+        help='If youtube-dl fails to find the torrc configuring the tor process, you can specify it there.'
+    )
 
     geo = optparse.OptionGroup(parser, 'Geo Restriction')
     geo.add_option(
