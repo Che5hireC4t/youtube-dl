@@ -326,6 +326,8 @@ def _real_main(argv=None):
     if opts.tor:
         tor = get_tor_instance(opts.torrc)
         available_tor_proxies = [p['http'] for p in tor.get_socks_proxy_dict()]
+        if len(available_tor_proxies) == 0:
+            raise LookupError('No socks5 port have been found for the tor gateway.')
 
     ydl_opts = {
         'usenetrc': opts.usenetrc,
