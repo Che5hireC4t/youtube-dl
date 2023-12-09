@@ -10,6 +10,8 @@ import os
 import random
 import sys
 
+from .torgate import Tor
+
 
 from .options import (
     parseOpts,
@@ -57,7 +59,10 @@ def _real_main(argv=None):
     parser, opts, args = parseOpts(argv)
 
     # Set user agent
-    if opts.user_agent is not None:
+    if opts.tor and not opts.dont_mimic_tb:
+        std_headers['User-Agent'] = torgate.Tor.TORBROWSER_USER_AGENT
+
+    if opts.user_agent is not None:  # Overriding the user-agent as said in the option help strings.
         std_headers['User-Agent'] = opts.user_agent
 
     # Set referer
