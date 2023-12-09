@@ -252,6 +252,14 @@ def parseOpts(overrideArguments=None):
         help='When using the --tor option, youtube-dl will try to change the tor circuit between each download.'
              'Set this option to disable this behavior.'
     )
+    anonymity.add_option(
+        '--retry-new-id', dest='retry-new-id',
+        metavar='NUMBER', default=-1, type=int,
+        help='Some websites block Tor exit nodes. For instance, Youtube frequently sends a 403 unauthorized'
+             'or a 429 too many requests when trying to download videos through the Tor network.'
+             'This option specify how many times youtube-dl should attempt to change tor circuit before giving up.'
+             'Set this option to -1 to loop indefinitely.'
+    )
 
     geo = optparse.OptionGroup(parser, 'Geo Restriction')
     geo.add_option(
