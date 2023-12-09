@@ -246,6 +246,12 @@ def parseOpts(overrideArguments=None):
              'Set this option to disable this behavior. The --user-agent or any options setting custom headers override'
              'this behavior (i.e. this option is processed first, and then the other options).'
     )
+    anonymity.add_option(
+        '--dont-isolate-downloads', dest='dont-isolate',
+        action='store_true',
+        help='When using the --tor option, youtube-dl will try to change the tor circuit between each download.'
+             'Set this option to disable this behavior.'
+    )
 
     geo = optparse.OptionGroup(parser, 'Geo Restriction')
     geo.add_option(
