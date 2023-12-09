@@ -1,0 +1,3 @@
+[submodule "youtube_dl/torgate"]
+	path = youtube_dl/torgate
+	url = https://git.a38.fr/marmotte/torgate
