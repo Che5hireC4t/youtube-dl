@@ -266,6 +266,16 @@ def parseOpts(overrideArguments=None):
         help='When using the --tor option with a playlist, youtube-dl will download each video in random order '
              'by setting internally the option --playlist-random. Set this option to disable this behavior.'
     )
+    anonymity.add_option(
+        '--discretion-level', dest='discretion_level',
+        metavar='NUMBER', default=0, type=int,
+        help='Level of discretion for downloading multiple videos. Default = 0.'
+             '0 - Don\'t wait between each download'
+             '1 - Wait a random number of seconds within 1 minute'
+             '2 - Wait a random number of seconds within 5 minutes'
+             '3 - Wait a random number of seconds within 10 minutes'
+             '4 - Wait a random number of seconds within 60 minutes'
+    )
 
     geo = optparse.OptionGroup(parser, 'Geo Restriction')
     geo.add_option(
