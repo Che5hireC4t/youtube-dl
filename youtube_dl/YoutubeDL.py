@@ -487,6 +487,18 @@ class YoutubeDL(object):
         return itertools.cycle(available_tor_proxies)
 
 
+    def __change_tor_circuit(self) -> None:
+        self.to_screen('[download] Getting a new tor circuit.')
+        tor = self.params['tor_instance']
+        next_proxy = next(self.__tor_proxy_cycle)
+        if next_proxy == self.__first_proxy:
+            tor.change_tor_circuit()
+        self.params['proxy'] = next_proxy
+        self._setup_opener()  # Necessary to reset the proxy
+        return
+
+
+
     def warn_if_short_id(self, argv):
         # short YouTube ID starting with dash?
         idxs = [
