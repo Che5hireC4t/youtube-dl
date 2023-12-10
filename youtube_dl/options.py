@@ -260,6 +260,12 @@ def parseOpts(overrideArguments=None):
              'This option specify how many times youtube-dl should attempt to change tor circuit before giving up.'
              'Set this option to -1 to loop indefinitely.'
     )
+    anonymity.add_option(
+        '--dont-randomize', dest='dont_randomize',
+        action='store_true',
+        help='When using the --tor option with a playlist, youtube-dl will download each video in random order '
+             'by setting internally the option --playlist-random. Set this option to disable this behavior.'
+    )
 
     geo = optparse.OptionGroup(parser, 'Geo Restriction')
     geo.add_option(
