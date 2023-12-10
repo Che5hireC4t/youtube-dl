@@ -453,7 +453,8 @@ def _real_main(argv=None):
         'autonumber': opts.autonumber if opts.autonumber is True else None,
         'usetitle': opts.usetitle if opts.usetitle is True else None,
         'tor_instance': tor,
-        'isolate_downloads': not opts.dont_isolate
+        'isolate_downloads': not opts.dont_isolate,
+        'discretion_level': opts.discretion_level
     }
 
     with YoutubeDL(ydl_opts) as ydl:
