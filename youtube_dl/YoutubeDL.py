@@ -472,6 +472,15 @@ class YoutubeDL(object):
 
         register_socks_protocols()
 
+
+    def __setup_tor_proxy_rotation(self) -> itertools.cycle:
+        tor = self.params['tor_instance']
+        available_tor_proxies = [p['http'] for p in tor.get_socks_proxy_dict()]
+        if len(available_tor_proxies) == 0:
+            raise LookupError('No socks5 port have been found for the tor gateway.')
+        return itertools.cycle(available_tor_proxies)
+
+
     def warn_if_short_id(self, argv):
         # short YouTube ID starting with dash?
         idxs = [
