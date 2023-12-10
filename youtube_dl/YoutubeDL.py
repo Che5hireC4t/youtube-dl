@@ -1178,7 +1178,24 @@ class YoutubeDL(object):
 
         x_forwarded_for = ie_result.get('__x_forwarded_for_ip')
 
+        tor = self.params['tor_instance']
+        tor_and_isolate_downloads = self.params['isolate_downloads'] is True and tor is not None
+        if tor_and_isolate_downloads:
+            available_tor_proxies = [p['http'] for p in tor.get_socks_proxy_dict()]
+            if len(available_tor_proxies) == 0:
+                raise LookupError('No socks5 port have been found for the tor gateway.')
+            first_proxy = available_tor_proxies[0]
+            proxy_string_cycle = itertools.cycle(available_tor_proxies)
+
         for i, entry in enumerate(entries, 1):
+            if tor_and_isolate_downloads:
+                self.to_screen('[download] Getting a new tor circuit.')
+                next_proxy = next(proxy_string_cycle)
+                if next_proxy == first_proxy:
+                    tor.change_tor_circuit()
+                self.params['proxy'] = next_proxy
+                self._setup_opener()  # Necessary to reset the proxy
+
             self.to_screen('[download] Downloading video %s of %s' % (i, n_entries))
             # This __x_forwarded_for_ip thing is a bit ugly but requires
             # minimal changes
