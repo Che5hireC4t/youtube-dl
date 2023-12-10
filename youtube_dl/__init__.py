@@ -454,7 +454,8 @@ def _real_main(argv=None):
         'usetitle': opts.usetitle if opts.usetitle is True else None,
         'tor_instance': tor,
         'isolate_downloads': not opts.dont_isolate,
-        'discretion_level': opts.discretion_level
+        'discretion_level': opts.discretion_level,
+        'retry_new_id': opts.retry_new_id
     }
 
     with YoutubeDL(ydl_opts) as ydl:
