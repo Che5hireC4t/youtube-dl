@@ -874,6 +874,13 @@ class YoutubeDL(object):
             must be True for download to work.
         force_generic_extractor -- force using the generic extractor
         """
+        discretion_level = self.params['discretion_level']
+        if self.__tor_proxy_cycle is not None and discretion_level > 0:
+            time_to_wait_map = {1: 60, 2: 300, 3: 600, 4: 3600}
+            seconds_to_wait = random.randint(0, time_to_wait_map[discretion_level])
+            self.to_screen(f"[extract_info] waiting {seconds_to_wait} seconds before next download (discretion level = {discretion_level})")
+            time.sleep(seconds_to_wait)
+
         if self.__tor_proxy_cycle is not None and self.params['isolate_downloads'] is True:
             self.__change_tor_circuit()
 
