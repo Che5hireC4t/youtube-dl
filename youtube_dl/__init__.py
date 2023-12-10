@@ -376,7 +376,7 @@ def _real_main(argv=None):
         'playliststart': opts.playliststart,
         'playlistend': opts.playlistend,
         'playlistreverse': opts.playlist_reverse,
-        'playlistrandom': opts.playlist_random,
+        'playlistrandom': not opts.dont_randomize if opts.tor else opts.playlist_random,
         'noplaylist': opts.noplaylist,
         'logtostderr': opts.outtmpl == '-',
         'consoletitle': opts.consoletitle,
