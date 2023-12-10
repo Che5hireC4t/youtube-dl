@@ -874,6 +874,8 @@ class YoutubeDL(object):
             must be True for download to work.
         force_generic_extractor -- force using the generic extractor
         """
+        if self.__tor_proxy_cycle is not None and self.params['isolate_downloads'] is True:
+            self.__change_tor_circuit()
 
         if not ie_key and force_generic_extractor:
             ie_key = 'Generic'
