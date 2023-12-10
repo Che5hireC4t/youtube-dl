@@ -455,8 +455,10 @@ class YoutubeDL(object):
                 'Put  from __future__ import unicode_literals  at the top of your code file or consider switching to Python 3.x.')
 
         self.__tor_proxy_cycle = None
+        self.__first_proxy = None
         if self.params['isolate_downloads'] is True and self.params['tor_instance'] is not None:
             self.__tor_proxy_cycle = self.__setup_tor_proxy_rotation()
+            self.__first_proxy = next(self.__tor_proxy_cycle)
 
         self._setup_opener()
 
