@@ -454,6 +454,10 @@ class YoutubeDL(object):
                 'Parameter outtmpl is bytes, but should be a unicode string. '
                 'Put  from __future__ import unicode_literals  at the top of your code file or consider switching to Python 3.x.')
 
+        self.__tor_proxy_cycle = None
+        if self.params['isolate_downloads'] is True and self.params['tor_instance'] is not None:
+            self.__tor_proxy_cycle = self.__setup_tor_proxy_rotation()
+
         self._setup_opener()
 
         if auto_init:
