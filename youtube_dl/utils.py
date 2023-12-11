@@ -34,6 +34,7 @@ import tempfile
 import time
 import traceback
 import unicodedata
+import urllib.error
 import xml.etree.ElementTree
 import zlib
 
@@ -2449,6 +2450,32 @@ class DownloadError(YoutubeDLError):
         """ exc_info, if given, is the original exception that caused the trouble (as returned by sys.exc_info()). """
         super(DownloadError, self).__init__(msg)
         self.exc_info = exc_info
+
+
+class BlockedTorExitError(YoutubeDLError):
+    """
+    Blocked Tor exit exception.
+
+    When downloading a video through the Tor network, some exit nodes may be blacklisted by the server.
+    Typically, YouTube sends a 403 or a 421 http code. This exception is intended to signal
+    such a condition occurred.
+    """
+
+    __slots__ = ('__http_error_object',)
+
+    # 403 = Forbidden
+    # 421 = Too many requests
+    CAUGHT_ERROR_CODES = (403, 421)
+
+    def __init__(self, http_error_object: urllib.error.HTTPError) -> None:
+        super().__init__(str(http_error_object))
+        self.__http_error_object = http_error_object
+        return
+
+    def __get_http_error_object(self) -> urllib.error.HTTPError:
+        return self.__http_error_object
+
+    http_error_object = property(fget=__get_http_error_object)
 
 
 class SameFileError(YoutubeDLError):
