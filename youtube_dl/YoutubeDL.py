@@ -65,6 +65,7 @@ from .utils import (
     determine_ext,
     determine_protocol,
     DownloadError,
+    BlockedTorExitError,
     encode_compat_str,
     encodeFilename,
     error_to_compat_str,
@@ -901,7 +902,15 @@ class YoutubeDL(object):
                 self.report_warning('The program functionality for this site has been marked as broken, '
                                     'and will probably not work.')
 
-            return self.__extract_info(url, ie, download, extra_info, process)
+            how_many_id_to_try = self.params['retry_new_id']
+            while how_many_id_to_try != 0:
+                try:
+                    return self.__extract_info(url, ie, download, extra_info, process)
+                except BlockedTorExitError:
+                    self.to_screen(f"[extract_info] Tor exit blocked. Changing circuit.")
+                    self.__change_tor_circuit()
+                    how_many_id_to_try -= 1
+            raise DownloadError('No more identity to try.')
         else:
             self.report_error('no suitable InfoExtractor for URL %s' % url)
 
