@@ -6,6 +6,7 @@ from .fragment import FragmentFD
 from ..compat import compat_urllib_error
 from ..utils import (
     DownloadError,
+    BlockedTorExitError,
     urljoin,
 )
 
@@ -61,6 +62,10 @@ class DashSegmentsFD(FragmentFD):
                     # is usually enough) thus allowing to download the whole file successfully.
                     # To be future-proof we will retry all fragments that fail with any
                     # HTTP error.
+                    if self.ydl.params['tor_instance'] is not None and err.code in BlockedTorExitError.CAUGHT_ERROR_CODES:
+                        # This means YouTube has sent a 403 or a 421 code.
+                        # Exit node is blacklisted, no need to go further.
+                        raise BlockedTorExitError(err)
                     if count < fragment_retries:
                         self.report_retry_fragment(err, frag_index, count + 1, fragment_retries)
                         continue
