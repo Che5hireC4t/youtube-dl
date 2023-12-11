@@ -2457,7 +2457,7 @@ class BlockedTorExitError(YoutubeDLError):
     Blocked Tor exit exception.
 
     When downloading a video through the Tor network, some exit nodes may be blacklisted by the server.
-    Typically, YouTube sends a 403 or a 421 http code. This exception is intended to signal
+    Typically, YouTube sends a 403 or a 429 http code. This exception is intended to signal
     such a condition occurred.
     """
 
@@ -2465,7 +2465,7 @@ class BlockedTorExitError(YoutubeDLError):
 
     # 403 = Forbidden
     # 421 = Too many requests
-    CAUGHT_ERROR_CODES = (403, 421)
+    CAUGHT_ERROR_CODES = (403, 429)
 
     def __init__(self, http_error_object: urllib.error.HTTPError) -> None:
         super().__init__(str(http_error_object))
