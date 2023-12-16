@@ -925,6 +925,7 @@ def parseOpts(overrideArguments=None):
 
     parser.add_option_group(general)
     parser.add_option_group(network)
+    parser.add_option_group(anonymity)
     parser.add_option_group(geo)
     parser.add_option_group(selection)
     parser.add_option_group(downloader)
