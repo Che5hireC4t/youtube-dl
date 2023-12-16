@@ -457,6 +457,7 @@ class YoutubeDL(object):
 
         self.__tor_proxy_cycle = None
         self.__first_proxy = None
+        self.__first_download = True
         if self.params['isolate_downloads'] is True and self.params['tor_instance'] is not None:
             self.__tor_proxy_cycle = self.__setup_tor_proxy_rotation()
             self.__first_proxy = next(self.__tor_proxy_cycle)
@@ -876,11 +877,12 @@ class YoutubeDL(object):
         force_generic_extractor -- force using the generic extractor
         """
         discretion_level = self.params['discretion_level']
-        if self.__tor_proxy_cycle is not None and discretion_level > 0:
+        if self.__tor_proxy_cycle is not None and discretion_level > 0 and not self.__first_download:
             time_to_wait_map = {1: 60, 2: 300, 3: 600, 4: 3600}
             seconds_to_wait = random.randint(0, time_to_wait_map[discretion_level])
             self.to_screen(f"[extract_info] waiting {seconds_to_wait} seconds before next download (discretion level = {discretion_level})")
             time.sleep(seconds_to_wait)
+        self.__first_download = False
 
         if self.__tor_proxy_cycle is not None and self.params['isolate_downloads'] is True:
             self.__change_tor_circuit()
