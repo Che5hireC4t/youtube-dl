@@ -2464,7 +2464,7 @@ class BlockedTorExitError(YoutubeDLError):
     __slots__ = ('__http_error_object',)
 
     # 403 = Forbidden
-    # 421 = Too many requests
+    # 429 = Too many requests
     CAUGHT_ERROR_CODES = (403, 429)
 
     def __init__(self, http_error_object: urllib.error.HTTPError) -> None:
