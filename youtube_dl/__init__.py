@@ -493,10 +493,10 @@ def get_tor_instance(torrc_file=None) -> Tor:
     if torrc_file:
         return Tor(torrc_file)
     else:
-        torrc = Torrc.search_torrc_file()
-        if torrc is None:
+        torrc_content, torrc_file = Torrc.search_torrc_file()
+        if torrc_content is None:
             raise FileNotFoundError('Impossible to locate a torrc file. Please specify one through --torrc option.')
-        return Tor(torrc)
+        return Tor(torrc_content)
 
 
 def main(argv=None):
