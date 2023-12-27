@@ -327,9 +327,15 @@ def _real_main(argv=None):
         tor = get_tor_instance(opts.torrc)
         available_tor_proxies = [p['http'] for p in tor.get_socks_proxy_dict()]
         if len(available_tor_proxies) == 0:
-            available_tor_proxies = [p['http'] for p in tor.get_socks_proxy_dict(use_recommended_flags=False)]
-            if len(available_tor_proxies) == 0:
-                raise LookupError('No socks5 port have been found for the tor gateway.')
+            if opts.allow_unsafe_ports is not True:
+                sys.stdout.write('No secure socks5 port have been found for the tor gateway. Try to reconfigure your torrc file, or use --allow-unsafe-ports option\n')
+                sys.stdout.write('This program is now shutting down for security reasons.')
+                exit(0)
+            else:
+                available_tor_proxies = [p['http'] for p in tor.get_socks_proxy_dict(use_recommended_flags=False)]
+                if len(available_tor_proxies) == 0:
+                    sys.stdout.write('No socks5 port has been found to interact with tor. Check the torrc file.')
+                    exit(0)
 
     ydl_opts = {
         'usenetrc': opts.usenetrc,
