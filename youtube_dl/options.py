@@ -276,6 +276,16 @@ def parseOpts(overrideArguments=None):
              '3 - Wait a random number of seconds within 10 minutes'
              '4 - Wait a random number of seconds within 60 minutes'
     )
+    anonymity.add_option(
+        '--allow-unsafe-ports', dest='allow_unsafe_ports',
+        action='store_true',
+        help='In choosing which socks port to interact with tor, all ports does not have the same anonymity level. '
+             'Some ports for instance isolate the destination address and / or the destination port (use a unique tor '
+             'circuit for each destination ip and/or port). Destination isolation is not automatic in the torrc '
+             'configuration and must be flagged explicitly. Otherwise, same circuit is reused for multiple '
+             'destinations. By default, youtube-dl will not use such ports and will crash '
+             'if no isolating port is found. Set this option to allow non-isolating ports.'
+    )
 
     geo = optparse.OptionGroup(parser, 'Geo Restriction')
     geo.add_option(
