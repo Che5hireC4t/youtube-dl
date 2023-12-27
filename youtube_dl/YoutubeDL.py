@@ -484,9 +484,14 @@ class YoutubeDL(object):
     def __setup_tor_proxy_rotation(self) -> itertools.cycle:
         tor = self.params['tor_instance']
         available_tor_proxies = [p['http'] for p in tor.get_socks_proxy_dict()]
-        if len(available_tor_proxies) == 0:
-            raise LookupError('No socks5 port have been found for the tor gateway.')
-        return itertools.cycle(available_tor_proxies)
+        if len(available_tor_proxies) != 0:
+            return itertools.cycle(available_tor_proxies)
+        available_tor_proxies = [p['http'] for p in tor.get_socks_proxy_dict(use_recommended_flags=False)]
+        if len(available_tor_proxies) != 0:
+            self.to_screen('Warning: No socks port with isolateDestAddr has been found. Using standard socks ports.')
+            return itertools.cycle(available_tor_proxies)
+        raise LookupError('No socks5 port have been found for the tor gateway.')
+
 
 
     def __change_tor_circuit(self) -> None:
