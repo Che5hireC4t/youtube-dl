@@ -61,6 +61,8 @@ def _real_main(argv=None):
     # Set user agent
     if opts.tor and not opts.dont_mimic_tb:
         std_headers['User-Agent'] = torgate.Tor.TORBROWSER_USER_AGENT
+        std_headers['Connection'] = 'keep-alive'
+        std_headers['Accept-Language'] = 'en-US,en;q=0.5'
 
     if opts.user_agent is not None:  # Overriding the user-agent as said in the option help strings.
         std_headers['User-Agent'] = opts.user_agent
