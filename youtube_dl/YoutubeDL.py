@@ -936,7 +936,7 @@ class YoutubeDL(object):
                 msg += '\nYou might want to use a VPN or a proxy server (with --proxy) to workaround.'
                 self.report_error(msg)
             except ExtractorError as e:  # An error we somewhat expected
-                if self.__tor_proxy_cycle is not None and e.cause.status in BlockedTorExitError.CAUGHT_ERROR_CODES:
+                if self.__tor_proxy_cycle is not None:  # and e.cause.status in BlockedTorExitError.CAUGHT_ERROR_CODES:  # e.cause can be an URLError and thus not having status.
                     raise BlockedTorExitError(e.cause) from None
                 self.report_error(compat_str(e), tb=e.format_traceback())
             except MaxDownloadsReached:
